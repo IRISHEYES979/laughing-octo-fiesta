@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Crochet Pattern Library</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #fff8f3;
+  color: #493b35;
+  margin: 0;
+  padding: 20px;
+}
+h1 { color: #925b70; }
+button, .upload {
+  background: #925b70;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 6px 0;
+  font-size: 16px;
+}
+.upload { display: inline-block; cursor: pointer; }
+input { margin: 12px 0; }
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+.pattern {
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 2px 6px #0001;
+}
+.pattern img {
+  width: 100%;
+  border-radius: 8px;
+}
+.small { font-size: 13px; color: #75645d; }
+</style>
+</head>
+<body>
+<h1>🧶 My Crochet Pattern Library</h1>
+<p>Your personal home for crochet patterns and pattern screenshots.</p>
+
+<h2>Add pattern pictures</h2>
+<label class="upload">
+  Choose pictures
+  <input id="photos" type="file" accept="image/*" multiple hidden>
+</label>
+<p class="small">Choose screenshots from your phone. Your original photos won't be changed.</p>
+
+<h2>My patterns</h2>
+<div id="gallery"></div>
+
+<script>
+const picker = document.getElementById("photos");
+const gallery = document.getElementById("gallery");
+
+picker.addEventListener("change", function() {
+  Array.from(this.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const card = document.createElement("div");
+      card.className = "pattern";
+      const image = document.createElement("img");
+      image.src = event.target.result;
+      image.alt = file.name;
+      const name = document.createElement("p");
+      name.textContent = file.name;
+      card.append(image, name);
+      gallery.appendChild(card);
+    };
+    reader.readAsDataURL(file);
+  });
+});
+</script>
+</body>
+</html>
